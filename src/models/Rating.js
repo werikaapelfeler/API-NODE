@@ -1,20 +1,20 @@
 const mongoose = require('../database')
-import Film from '@models/Film';
-import User from '@models/User';
 
 const RatingSchema = new mongoose.Schema({
-    user: {
-        type: User,
+    film: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Film',
         required: true
     },
-    film: {
-        type: Film,
+    user: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User',
         required: true
     },
     rating: {
-          type: [0 | 1 | 2 | 3 | 4],
-          required: true
-      },
+        type: [0 | 1 | 2 | 3 | 4],
+        required: true
+    },
     createdAt: {
         type: Date,
         default: Date.now,
