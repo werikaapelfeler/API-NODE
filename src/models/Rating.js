@@ -12,7 +12,7 @@ const RatingSchema = new mongoose.Schema({
         required: true
     },
     rating: {
-        type: [0 | 1 | 2 | 3 | 4],
+        type: Number,
         required: true
     },
     createdAt: {
