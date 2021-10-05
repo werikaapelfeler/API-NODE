@@ -9,4 +9,15 @@ router.get('/', (req, res) => {
     res.send({ ok: true, users: req.userId})
 })
 
-module.exports = app => app.use('/projects', router)
+router.post('/create', (req, res) => {
+    try {
+        let {title, synopsis, enabled, filmActor } = req.body
+        
+        const film = 
+    } catch {
+        return res.status(400).send({error: "Error creating film"})
+    }
+    
+})
+
+module.exports = app => app.use('/films', router)
