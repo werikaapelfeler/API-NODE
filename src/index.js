@@ -10,7 +10,7 @@ app.use(bodyParser.urlencoded({ extended: false }))
 require('./routers/auth')(app)
 require('./routers/films')(app)
 require('./routers/user')(app)
-
+require('./routers/rating')(app)
 
 // Start Listenting for the server on PORT
 app.listen(3000, () =>
