@@ -1,7 +1,7 @@
 const mongoose = require('../database')
 
 const ActorSchema = new mongoose.Schema({
-    nome: {
+    name: {
         type: String,
         required: true
     },
