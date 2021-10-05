@@ -13,7 +13,6 @@ router.post('/create', (req, res) => {
     try {
         let {title, synopsis, enabled, filmActor } = req.body
         
-        const film = 
     } catch {
         return res.status(400).send({error: "Error creating film"})
     }
