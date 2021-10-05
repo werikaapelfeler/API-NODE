@@ -8,7 +8,7 @@ app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: false }))
 
 require('./routers/auth')(app)
-require('./routers/filmes')(app)
+require('./routers/films')(app)
 require('./routers/user')(app)
 
 
