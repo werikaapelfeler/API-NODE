@@ -1,7 +1,7 @@
 const mongoose = require('../database')
 
 const DirectorSchema = new mongoose.Schema({
-    nome: {
+    name: {
         type: String,
         required: true
     },
