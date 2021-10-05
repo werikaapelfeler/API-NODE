@@ -5,6 +5,11 @@ const ActorSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    film: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Film',
+        required: true
+    },
     createdAt: {
         type: Date,
         default: Date.now,
