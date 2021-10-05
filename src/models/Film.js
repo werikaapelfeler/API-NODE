@@ -13,11 +13,6 @@ const FilmSchema = new mongoose.Schema({
         type: Boolean,
         required: true,
     },
-    createUser:{
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'User',
-        required: true,
-    },
     createdAt: {
         type: Date,
         default: Date.now,
