@@ -1,7 +1,22 @@
+# Preparação de ambientes
+ - Você deve ter o mongoDB instalado na máquina
+ - Realizar o clone deste repositório para a sua máquina
+ - Executar no terminal, na pasta do projeto, npm install
+ - Executar projeto rodando o comando npm run start
 
 # Rotas 
 
 https://documenter.getpostman.com/view/12164635/UUy65j5s
+
+# tecnologias e pacotes utilizados:
+  - NodeJS
+  - ExpressJS
+  - JavaScript
+  - MongoDB
+  - Mongoose
+  - JWT
+  - BCrypt
+  - 
 
 # Sobre
 
