@@ -16,7 +16,7 @@ https://documenter.getpostman.com/view/12164635/UUy65j5s
   - Mongoose
   - JWT
   - BCrypt
-  - 
+
 
 # Sobre
 
