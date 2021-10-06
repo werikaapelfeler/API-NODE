@@ -13,15 +13,14 @@ router.use(authMiddleware)
 
 router.get('/all', async (req, res) => {
     try {
-
         let { title, actor, director, genre } = req.body
-        let filter = {}
-        if (title) { filter["title"] = title }
-        //if (actor) { filter["actor"] = actor }
-        if (director) { filter["director"] = director }
-        if (genre) { filter["genre"] = genre }
+        let filtro = {}
+        if (title) { filtro["title"] = { $regex: '.*' + title + '.*' } }
+        if (actor) { filtro["actors"] = actor }
+        if (director) { filtro["directors"] = director }
+        if (genre) { filtro["genre"] = genre }
 
-        const films = await Film.find(filter).populate(['directors', 'actors', 'genre'])
+        let films = await Film.find(filtro).populate(['directors', 'actors', 'genre'])
 
         return res.send({ films })
     } catch (err) {
