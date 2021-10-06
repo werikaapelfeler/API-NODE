@@ -11,13 +11,13 @@ const router = express.Router()
 
 router.use(authMiddleware)
 
-router.get('/list', async (req, res) => {
+router.get('/all', async (req, res) => {
     try {
 
         let { title, actor, director, genre } = req.body
         let filter = {}
         if (title) { filter["title"] = title }
-        if (actor) { filter["actor"] = actor }
+        //if (actor) { filter["actor"] = actor }
         if (director) { filter["director"] = director }
         if (genre) { filter["genre"] = genre }
 
@@ -49,7 +49,7 @@ router.get('/detalhe/:id', async (req, res) => {
 router.post('/create', async (req, res) => {
     try {
         let user = await User.findById(req.userId)
-        if (user.role == 'admin') {
+        if (user && user.role == 'admin') {
 
             let { title, synopsis, enabled, actors, directors, genre } = req.body
 
@@ -74,7 +74,7 @@ router.post('/create', async (req, res) => {
 
             return res.send({ film })
         } else {
-            return res.status(400).send({ error: "User without permission" })
+            return res.status(401).send({ error: "User without permission" })
         }
 
     } catch (err) {
@@ -86,36 +86,39 @@ router.post('/create', async (req, res) => {
 
 router.put('/update/:id', async (req, res) => {
     try {
-        let { title, synopsis, enabled, actors, directors, genre } = req.body
+        let user = await User.findById(req.userId)
+        if (user.role == 'admin') {
+            let { title, synopsis, enabled, actors, directors, genre } = req.body
 
-        const genreF = new Genre(genre)
-        await genreF.save()
+            const genreF = new Genre(genre)
+            await genreF.save()
 
-        const film = await Film.findByIdAndUpdate(req.params.id,
-            {
-                title,
-                synopsis,
-                enabled,
-                genre: genreF._id
-            }, { new: true })
+            const film = await Film.findByIdAndUpdate(req.params.id,
+                {
+                    title,
+                    synopsis,
+                    enabled,
+                    genre: genreF._id
+                }, { new: true })
 
-        film.actors = []
-        film.directors = []
-        await Promise.all(actors.map(async actor => {
-            const actorF = new Actor({ ...actor })
-            await actorF.save()
-            film.actors.push(actorF)
-        }))
+            film.actors = []
+            film.directors = []
+            await Promise.all(actors.map(async actor => {
+                const actorF = new Actor({ ...actor })
+                await actorF.save()
+                film.actors.push(actorF)
+            }))
 
-        await Promise.all(directors.map(async director => {
-            const directorF = new Director({ ...director })
-            await directorF.save()
-            film.directors.push(directorF)
-        }))
+            await Promise.all(directors.map(async director => {
+                const directorF = new Director({ ...director })
+                await directorF.save()
+                film.directors.push(directorF)
+            }))
 
-        await film.save()
+            await film.save()
 
-        return res.send({ film })
+            return res.send({ film })
+        }
 
     } catch (err) {
         console.log(err)
