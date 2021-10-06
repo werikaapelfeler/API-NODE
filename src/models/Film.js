@@ -13,21 +13,9 @@ const FilmSchema = new mongoose.Schema({
         type: Boolean,
         required: true,
     },
-    actors: [{
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Actor',
-        required: true
-    }],
-    directors: [{
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Director',
-        required: true
-    }],
-    genre: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Genre',
-        required: true
-    },
+    actors: [],
+    directors: [],
+    genre: [],
     createdAt: {
         type: Date,
         default: Date.now,
