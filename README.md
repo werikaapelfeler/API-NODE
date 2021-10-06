@@ -1,6 +1,6 @@
 # Preparação de ambientes
  - Você deve ter o mongoDB instalado na máquina
- - Realizar o clone deste repositório para a sua máquina
+ - Realizar o clone deste repositório
  - Executar no terminal, na pasta do projeto, npm install
  - Executar projeto rodando o comando npm run start
 
