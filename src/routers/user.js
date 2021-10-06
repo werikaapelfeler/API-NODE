@@ -27,8 +27,14 @@ router.put('/update/:id', async (req, res) => {
 
 router.delete('/delete/:id', async (req, res) => {
     try {
-        await User.findByIdAndUpdate(req.params.id, { enabled: false }, { new: true })
-        res.status(200).send({ msg: "Successfully deleted" })
+        let userToken = await User.findById(req.userId)
+        if (userToken.role == 'admin') {
+            await User.findByIdAndUpdate(req.params.id, { enabled: false }, { new: true })
+            res.status(200).send({ msg: "Successfully deleted" })
+        } else {
+            res.status(401).send({ error: "User without permission" })
+        }
+
     } catch (error) {
         res.status(400).send({ error: "Error deleting" })
     }
