@@ -1,6 +1,8 @@
 const express = require('express')
 const authMiddleware = require('../middlewares/auth')
 const Rating = require('../models/Rating')
+const User = require('../models/User')
+
 
 const router = express.Router()
 
@@ -8,17 +10,22 @@ router.use(authMiddleware)
 
 router.post('/rate', async (req, res) => {
     try {
-        let { film, rating } = req.body
+        let user = await User.findById(req.userId)
+        if (user.role == 'user') {
+            let { film, rating } = req.bodys
 
-        const rate = new Rating({
-            user: req.userId,
-            film: film,
-            rating: rating
-        });
+            const rate = new Rating({
+                user: req.userId,
+                film: film,
+                rating: rating
+            });
 
-        rate.save()
+            rate.save()
 
-        return res.status(200).send({ rate })
+            return res.status(200).send({ rate })
+        } else {
+            return res.status(400).send({ error: "User without permission" })
+        }
 
     } catch (err) {
         return res.status(400).send({ error: "Error creating rating" })

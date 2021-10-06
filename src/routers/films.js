@@ -5,6 +5,7 @@ const Director = require('../models/Director')
 const Film = require('../models/Film')
 const Genre = require('../models/Genre')
 const Rating = require('../models/Rating')
+const User = require('../models/User')
 
 const router = express.Router()
 
@@ -47,29 +48,34 @@ router.get('/detalhe/:id', async (req, res) => {
 
 router.post('/create', async (req, res) => {
     try {
-        console.log(req.userId)
-        let { title, synopsis, enabled, actors, directors, genre } = req.body
+        let user = await User.findById(req.userId)
+        if (user.role == 'admin') {
 
-        const genreF = new Genre(genre)
-        await genreF.save()
+            let { title, synopsis, enabled, actors, directors, genre } = req.body
 
-        const film = await Film.create({ title, synopsis, enabled, genre: genreF._id })
+            const genreF = new Genre(genre)
+            await genreF.save()
 
-        await Promise.all(actors.map(async actor => {
-            const actorF = new Actor({ ...actor })
-            await actorF.save()
-            film.actors.push(actorF)
-        }))
+            const film = await Film.create({ title, synopsis, enabled, genre: genreF._id })
 
-        await Promise.all(directors.map(async director => {
-            const directorF = new Director({ ...director })
-            await directorF.save()
-            film.directors.push(directorF)
-        }))
+            await Promise.all(actors.map(async actor => {
+                const actorF = new Actor({ ...actor })
+                await actorF.save()
+                film.actors.push(actorF)
+            }))
 
-        await film.save()
+            await Promise.all(directors.map(async director => {
+                const directorF = new Director({ ...director })
+                await directorF.save()
+                film.directors.push(directorF)
+            }))
 
-        return res.send({ film })
+            await film.save()
+
+            return res.send({ film })
+        } else {
+            return res.status(400).send({ error: "User without permission" })
+        }
 
     } catch (err) {
         console.log(err)
