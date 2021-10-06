@@ -4,14 +4,14 @@ const Rating = require('../models/Rating')
 
 const router = express.Router()
 
-//router.use(authMiddleware)
+router.use(authMiddleware)
 
 router.post('/rate', async (req, res) => {
     try {
-        let { user, film, rating } = req.body
+        let { film, rating } = req.body
 
         const rate = new Rating({
-            user: user,
+            user: req.userId,
             film: film,
             rating: rating
         });
