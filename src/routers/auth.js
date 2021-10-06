@@ -32,7 +32,7 @@ router.post("/register-admin", async (req, res) => {
     await userRegister(req.body, "admin", res);
 });
 
-router.post('/autentication', async (req, res) => {
+router.post('/login', async (req, res) => {
     const { email, password } = req.body
 
     const user = await User.findOne({ email }).select('+password')
