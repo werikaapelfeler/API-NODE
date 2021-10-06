@@ -8,7 +8,7 @@ router.use(authMiddleware)
 
 router.put('/update/:id', async (req, res) => {
     try {
-        const { name, email, role, enabled, password } = req.query || req.body
+        const { name, email, role, enabled, password } = req.body
 
         const user = await User.findByIdAndUpdate(req.params.id, {
             name,
@@ -17,7 +17,6 @@ router.put('/update/:id', async (req, res) => {
             enabled,
             password
         }, { new: true })
-
 
         await user.save()
         res.status(200).send({ user: user, msg: "Successfully updating" })
