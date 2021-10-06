@@ -12,7 +12,7 @@ require('./routers/films')(app)
 require('./routers/user')(app)
 require('./routers/rating')(app)
 
-// Start Listenting for the server on PORT
 app.listen(3000, () =>
     success({ message: `Server started on PORT 3000`, badge: true })
 );
+
