@@ -12,7 +12,7 @@ router.post('/rate', async (req, res) => {
     try {
         let user = await User.findById(req.userId)
         if (user.role == 'user') {
-            let { film, rating } = req.bodys
+            let { film, rating } = req.body
 
             const rate = new Rating({
                 user: req.userId,
@@ -24,10 +24,11 @@ router.post('/rate', async (req, res) => {
 
             return res.status(200).send({ rate })
         } else {
-            return res.status(400).send({ error: "User without permission" })
+            return res.status(401).send({ error: "User without permission" })
         }
 
     } catch (err) {
+        console.log(err)
         return res.status(400).send({ error: "Error creating rating" })
     }
 
